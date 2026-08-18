@@ -45,10 +45,17 @@ jobs:
       run: |
         python -m pip install --upgrade pip setuptools
         pip install flake8==7.3.0 flake8-isort==7.0.0
+        pip install -r ./backend/requirements.txt 
 
     # Шаг 4: Проверка качества и стандарта оформления Python-кода (PEP 8)
     # Вызываем flake8 только для директории backend/. 
     # Если найдены ошибки оформления, шаг завершится со сбоем (красный крестик на GitHub),
     # что сигнализирует разработчикам о необходимости исправить стиль кода.
-    - name: Test with flake8
-      run: python -m flake8 backend/
+    - name: Test with flake8 and django tests
+      run: |
+        python -m flake8 backend/
+        cd backend/
+        python manage.py test
+
+
+
